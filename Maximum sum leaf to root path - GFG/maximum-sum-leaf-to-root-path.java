@@ -112,24 +112,29 @@ class Tree {
 
 class Solution
 {
+    static int max = Integer.MIN_VALUE;
     public static int maxPathSum(Node root)
     {
         //code here
-        if(root.left != null && root.right != null){
-            int left = maxPathSum(root.left);
-            int right = maxPathSum(root.right);
-            return Math.max(left,right) + root.data;
+        max = Integer.MIN_VALUE;
+        travelpath(root,0);
+        return max;
+
+    }
+    public static void travelpath(Node node , int sum){
+        if(node == null){
+            return;
         }
-        else if(root.left != null){
-            int left = maxPathSum(root.left);
-            return left + root.data;
+        
+        if(node.left == null && node.right == null){
+            sum = sum+node.data;
+            if(sum>max){
+                max = sum;
+            }
         }
-        else if(root.right != null){
-            int right = maxPathSum(root.right);
-            return right + root.data;
-        }
-        else{
-            return root.data;
-        }
+        
+        
+        travelpath(node.left,sum+node.data);
+        travelpath(node.right,sum+node.data);
     }
 }
