@@ -14,22 +14,13 @@
  * }
  */
 class Solution {
-    public int height(TreeNode root){
-        if(root == null){
-            return -1;
-        }
-        
-        int lh = height(root.left);
-        int rh = height(root.right);
-        
-        return Math.max(lh,rh)+1;
-    }
+
     public int findBottomLeftValue(TreeNode root) {
         if(root == null){
             return 0;
         }
         
-        int h = height(root);
+        int ans = 0;
         Queue<TreeNode> qu = new LinkedList<>();
         qu.add(root);
         
@@ -38,8 +29,8 @@ class Solution {
             for(int i = 0; i < size; i++){
                 TreeNode rem = qu.remove();
                 
-                if(i == 0 && h ==0 ){
-                    return rem.val;
+                if(i == 0  ){
+                    ans = rem.val;
                 }
                 
                 if(rem.left != null){
@@ -51,9 +42,9 @@ class Solution {
                 }
                 
             }
-            h--;
+            
         }
         
-        return 0;
+        return ans;
     }
 }
