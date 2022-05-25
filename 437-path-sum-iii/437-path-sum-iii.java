@@ -14,35 +14,32 @@
  * }
  */
 class Solution {
-    int count = 0;
-    public int pathSum(TreeNode root, int targetSum) {
-        count = 0;
-        travel1(root,targetSum);
+    public int pathSum(TreeNode root, int sum) {
+        HashMap<Integer, Integer> preSum = new HashMap();
+        preSum.put(0,1);
+        helper(root, 0, sum, preSum);
         return count;
     }
-    
-    public void travel1(TreeNode node, int target){
-        if(node == null){
+    int count = 0;
+    public void helper(TreeNode root, int currSum, int target, HashMap<Integer, Integer> preSum) {
+        if (root == null) {
             return;
         }
         
-        travel2(node,0,target);
-        
-        travel1(node.left,target);
-        travel1(node.right,target);
-    }
-    
-    public void travel2(TreeNode node, int csum, int tar){
-        if(node == null){
-            return;
+        currSum += root.val;
+
+        if (preSum.containsKey(currSum - target)) {
+            count += preSum.get(currSum - target);
         }
         
-        if(csum+node.val == tar){
-            count++;
+        if (!preSum.containsKey(currSum)) {
+            preSum.put(currSum, 1);
+        } else {
+            preSum.put(currSum, preSum.get(currSum)+1);
         }
         
-        travel2(node.left,csum+node.val,tar);
-        travel2(node.right,csum+node.val,tar);
-        
+        helper(root.left, currSum, target, preSum);
+        helper(root.right, currSum, target, preSum);
+        preSum.put(currSum, preSum.get(currSum) - 1);
     }
 }
