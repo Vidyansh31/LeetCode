@@ -132,11 +132,56 @@ class Tree{
 class Solution{
     public Tree cloneTree(Tree tree){
        // add code here.
-       Tree root = new Tree(tree.data);
-       root.left = tree.left;
-       root.right = tree.right;
-       root.random = tree.random;
+       createDuplicates(tree);
+       setRandom(tree);
        
-       return root;
+       Tree dup = removeDuplicates(tree);
+       
+       return dup;
      }
+     
+     public void createDuplicates(Tree node){
+         if(node == null){
+             return;
+         }
+         
+         createDuplicates(node.left);
+         createDuplicates(node.right);
+         
+         Tree dup = new Tree(node.data);
+         dup.left = node.left;
+         
+         node.left = dup;
+     }
+     
+     public void setRandom(Tree org){
+         if(org == null){
+             return;
+         }
+         
+         setRandom(org.left.left);
+         setRandom(org.right);
+         
+         if(org.random != null){
+             org.left.random = org.random.left;
+         }
+     }
+     
+     public Tree removeDuplicates(Tree node){
+         if(node == null){
+             return null;
+         }
+         
+         Tree leftdup = removeDuplicates(node.left.left);
+         Tree rightdup = removeDuplicates(node.right);
+         
+         Tree dup = node.left;
+         node.left = node.left.left;
+         dup.left = leftdup;
+         dup.right = rightdup;
+         
+         return dup;
+     }
+     
+     
 }
