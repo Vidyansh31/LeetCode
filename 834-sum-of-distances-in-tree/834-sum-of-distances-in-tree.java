@@ -1,10 +1,10 @@
 class Solution {
     public int[] sumOfDistancesInTree(int n, int[][] edges) {
-        HashSet<Integer>[] graph = new HashSet[n];
+        ArrayList<Integer>[] graph = new ArrayList[n];
         
         //initializing HashSet for each node
         for(int i = 0; i < graph.length ; i++){
-            graph[i] = new HashSet<>();
+            graph[i] = new ArrayList<>();
         }
         
         //making graph
@@ -25,7 +25,7 @@ class Solution {
         
     }
     
-    public void helper1(HashSet<Integer>[] graph, int[] nodes, int[] res, int src, int par){
+    public void helper1(ArrayList<Integer>[] graph, int[] nodes, int[] res, int src, int par){
         for(int nbr : graph[src]){
             if(nbr != par){
                 helper1(graph,nodes,res,nbr,src);
@@ -37,7 +37,7 @@ class Solution {
         nodes[src]++;
     }
     
-     public void helper2(HashSet<Integer>[] graph, int[] nodes, int[] res, int src, int par){
+     public void helper2(ArrayList<Integer>[] graph, int[] nodes, int[] res, int src, int par){
         for(int nbr : graph[src]){
             if(nbr != par){
                 res[nbr] = res[src] + (nodes.length - nodes[nbr]) - (nodes[nbr]);
