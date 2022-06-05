@@ -1,54 +1,31 @@
 class Solution {
-    public int count = 0;
+    int res = 0;
     public int totalNQueens(int n) {
-        
-        if(n == 1){
-            return 1;
-        }
-        
-        int[][] chess = new int[n][n];
-        placeQueens(chess,0);
-        
-        return count;
+      //int[] horizonal = new int[n];
+      boolean[] vertical = new boolean[n];
+      boolean[] leftfall = new boolean[2 * n - 1];
+      boolean[] rightfall = new boolean[2 * n - 1];
+      helper(n, vertical, leftfall, rightfall, 0);
+      return res;
     }
     
-    public void placeQueens(int[][] chess, int row){
-        if(row == chess.length){
-            count++;
-            return;
-        }
-        
-        for(int col = 0; col < chess[0].length; col++){
-            if(isQueenSafe(chess,row,col)){
-                chess[row][col] = 1;
-                placeQueens(chess,row+1);
-                chess[row][col] = 0;
-            }
-        }
-    }
-    
-    public boolean isQueenSafe(int[][] chess , int row, int col){
-        //vertical col
-        for(int i = row-1, j = col; i >= 0; i--){
-            if(chess[i][j] == 1){
-                return false;
-            }
-        }
-        
-        //left diagonal
-        for(int i = row-1, j= col-1; i >= 0 && j >= 0; i--, j--){
-            if(chess[i][j] == 1){
-                return false;
-            }
-        }
-        
-        //right diagonal
-        for(int i = row-1, j= col+1; i >= 0 && j <chess[0].length ; i--, j++){
-            if(chess[i][j] == 1){
-                return false;
-            }
-        }
-        
-        return true;
-    }
-}
+    void helper(int n, boolean[] v, boolean[] l, boolean[] r, int row){
+      
+      if(row == n){
+        res++;
+        return;
+      }
+      
+      for(int col = 0; col < n; col++){
+         if(v[col] || l[row - col + n - 1] || r[row + col]) continue;
+         v[col] = true;
+         l[row - col + n - 1] = true;
+         r[row + col] = true;
+         
+         helper(n, v, l, r, row + 1);
+         
+         v[col] = false;
+         l[row - col + n - 1] = false;
+         r[row + col] = false;
+      }    
+    }}
