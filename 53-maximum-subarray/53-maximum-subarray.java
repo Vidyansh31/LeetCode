@@ -1,21 +1,39 @@
 class Solution {
     public int maxSubArray(int[] nums) {
-        int currSum = nums[0];
-        int LarSum = nums[0];
+        return helper(nums,0,nums.length-1);
+    }
+    
+    public int helper(int nums[],int i,int j){
+
+        if(i==j){
+            return nums[i];
+        }
+                          
+        int mid  =  (i+j)/2;
+        int sum = 0,leftMaxSUM = Integer.MIN_VALUE;
         
-        for(int i = 1; i < nums.length; i++){
-            if(currSum >= 0){
-                currSum += nums[i];
-            }
-            else{
-                currSum = nums[i];
-            }
-            
-            if(currSum > LarSum){
-                LarSum = currSum;
+        for(int l =  mid;l>=i;l--){
+            sum+=nums[l];
+            if(sum>leftMaxSUM){
+                leftMaxSUM =  sum;
+            }                                    
+        }
+        
+     int rightMaxSUM = Integer.MIN_VALUE;
+        sum = 0;    // reset sum to 0
+        for (int l = mid + 1; l <=j; l++)
+        {
+            sum += nums[l];
+            if (sum > rightMaxSUM ) {
+                rightMaxSUM = sum;
             }
         }
         
-        return LarSum;
+       int maxLeftRight = Math.max(helper(nums, i, mid),
+                                    helper(nums, mid + 1, j ));
+        return Math.max(maxLeftRight, leftMaxSUM + rightMaxSUM );
+        
+        
+    
     }
 }
