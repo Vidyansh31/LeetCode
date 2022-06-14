@@ -13,7 +13,8 @@ class Solution {
         int[] visited = new int[graph.length];
         for(int v = 0; v < graph.length; v++){
             if(visited[v] == 0){
-                boolean isBip = traversal(graph,v,visited);
+                // boolean isBip = traversalBFS(graph,v,visited);
+                boolean isBip = traversalDFS(graph,v,visited,1);
                 
                 if(!isBip){
                     return false;
@@ -24,7 +25,7 @@ class Solution {
         return true;
     }
     
-    public boolean traversal(int[][] graph, int v, int[] visited){
+    public boolean traversalBFS(int[][] graph, int v, int[] visited){
         Queue<Pair> qu = new LinkedList<>();
         qu.add(new Pair(v,1));
         
@@ -44,6 +45,26 @@ class Solution {
                 }
             }
             
+        }
+        
+        return true;
+    }
+    
+    public boolean traversalDFS(int[][] graph, int v, int[] visited, int color){
+        
+        visited[v] = color;
+        for(int nbr : graph[v]){
+            if(visited[nbr] == 0){
+                boolean isBip = traversalDFS(graph,nbr,visited,color*-1);
+                if(!isBip){
+                    return false;
+                }
+            }
+            else{
+                if(visited[nbr] != color * -1){
+                    return false;
+                }
+            }
         }
         
         return true;
