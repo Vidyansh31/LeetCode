@@ -1,16 +1,24 @@
 class Solution {
     public int findDuplicate(int[] nums) {
-        return store(nums,0);
-    }
-    
-    public int store(int[] nums, int curr){
-        if(nums[curr] == curr){
-            return curr;
+        
+        //find intersection point
+        //phase 1;
+        int slow = nums[0];
+        int fast = nums[0];
+        
+        do{
+            slow = nums[slow];
+            fast = nums[nums[fast]];
+        }while(slow != fast);
+        
+        // phase 2;
+        slow = nums[0];
+        
+        while(slow != fast){
+            slow = nums[slow];
+            fast = nums[fast];
         }
         
-        int nxt = nums[curr];
-        nums[curr] = curr;
-        
-        return store(nums,nxt);
+        return slow;
     }
 }
