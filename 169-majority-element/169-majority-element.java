@@ -1,30 +1,22 @@
 class Solution {
-    
     public int majorityElement(int[] nums) {
-        int floor = (nums.length/2);
         
-        HashMap<Integer, Integer> map = new HashMap<>();
+        // Bayer Moore Voting algorithm
+        int ans = -1;
+        int count = 0;
         
-        //Put all the value with there value
-        for(int num : nums){
-            if(map.containsKey(num)){
-                map.put(num , map.get(num)+1);
+        for(int el : nums){
+            if(el == ans) 
+                count++;
+            else if(count == 0){
+                ans = el;
+                count = 1;
             }
             else{
-                map.put(num,1);
+                count--;
             }
         }
         
-         
-       for(Map.Entry<Integer, Integer> entry : map.entrySet()){
-           if(entry.getValue() > floor){
-               return entry.getKey();
-           }
-       }
-        
-        return 0;
-        
-        
-        
+        return ans;
     }
 }
