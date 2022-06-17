@@ -14,16 +14,14 @@
  * }
  */
 class Solution {
-    
     int count = 0;
-    final int CAMERA = 1;
-    final int MONITERED = 2;
-    final int NOT_MONITERED = 3;
-    
+    final int  MONITORED = 1;
+    final int NOT_MONITORED = 2;
+    final int CAMERA = 3;
     public int minCameraCover(TreeNode root) {
         int val = helper(root);
         
-        if(val == NOT_MONITERED){
+        if(val == NOT_MONITORED){
             count++;
         }
         
@@ -32,21 +30,21 @@ class Solution {
     
     public int helper(TreeNode node){
         if(node == null){
-            return MONITERED;
+            return MONITORED;
         }
         
         int left = helper(node.left);
         int right = helper(node.right);
         
-        if(left == NOT_MONITERED || right == NOT_MONITERED){
+        if(left == NOT_MONITORED || right == NOT_MONITORED){
             count++;
             return CAMERA;
         }
         else if(left == CAMERA || right == CAMERA){
-            return MONITERED;
+            return MONITORED;
         }
         else{
-            return NOT_MONITERED;
+            return NOT_MONITORED;
         }
     }
 }
