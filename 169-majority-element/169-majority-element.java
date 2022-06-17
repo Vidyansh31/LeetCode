@@ -1,10 +1,11 @@
 class Solution {
     
     public int majorityElement(int[] nums) {
-        int floor = (int)Math.floor(nums.length/2);
+        int floor = (nums.length/2);
         
         HashMap<Integer, Integer> map = new HashMap<>();
         
+        //Put all the value with there value
         for(int num : nums){
             if(map.containsKey(num)){
                 map.put(num , map.get(num)+1);
