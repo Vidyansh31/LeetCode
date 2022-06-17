@@ -17,6 +17,13 @@ class Solution {
             }
         }
         
-        return ans;
+            count = 0;
+        for (int index = 0; index < nums.length; index++) {
+          if (nums[index] == ans)
+            count++;
+        }
+        if (count > (nums.length / 2))
+          return ans;
+        return -1;
     }
 }
