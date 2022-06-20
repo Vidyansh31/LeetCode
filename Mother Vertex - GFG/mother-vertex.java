@@ -42,16 +42,18 @@ class Solution
         boolean[] vis = new boolean[V];
         
         boolean flag = true;
-        for(int i = 0; i < V; i++){
-            if(vis[i] == false){
-                dfs(i,adj,st,vis);
-                if(flag == true && st.size() == V){
+        // for(int i = 0; i < V; i++){
+        //     if(vis[i] == false){
+               
+                
+        //     }
+        // }
+        
+         dfs(0,adj,st,vis);
+                if( st.size() == V){
                     return st.pop();
                 }
-                flag = false;
-                
-            }
-        }
+               
         
         
         return -1;
