@@ -49,7 +49,7 @@ class Solution
                     return st.pop();
                 }
                 flag = false;
-                break;
+                
             }
         }
         
