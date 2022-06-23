@@ -7,7 +7,7 @@ class Solution {
             if(numbers[low] + numbers[high] == target){
                 return new int[]{low+1,high+1};
             }
-            else if(numbers[low]+numbers[high] < target){
+            else if (numbers[low] + numbers[high] < target){
                 low++;
             }
             else{
@@ -15,7 +15,7 @@ class Solution {
             }
         }
         
-        return new int[2];
+        return new int[]{0,0};
         
     }
 }
