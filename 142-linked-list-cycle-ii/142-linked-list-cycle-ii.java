@@ -18,22 +18,18 @@ public class Solution {
         ListNode slow = head;
         ListNode fast = head;
         
-        do{
-            if(slow.next != null){
-                slow = slow.next;
-            }
-            else{
-                return null;
-            }
+        while(fast != null && fast.next != null){
+            slow = slow.next;
+            fast = fast.next.next;
             
-             if(fast.next != null && fast.next.next != null){
-                fast = fast.next.next;
+            if(slow == fast){
+                break;
             }
-            else{
-                return null;
-            }
-            
-        }while(slow != fast);
+        }
+        
+        if(fast == null || fast.next == null){
+            return null;
+        }
         
         slow = head;
         
