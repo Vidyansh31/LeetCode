@@ -1,56 +1,23 @@
 class Solution {
     public int romanToInt(String s) {
-        int num = 0;
-        for(int i = 0; i < s.length(); i++){
-            char ch = s.charAt(i);
-            
-            if(ch == 'I'){
-                num += 1;
+        int ans = 0; int num = 0;
+        
+        for(int i = s.length()-1; i >= 0 ; i--){
+             switch(s.charAt(i)) {
+                case 'I': num = 1; break;
+                case 'V': num = 5; break;
+                case 'X': num = 10; break;
+                case 'L': num = 50; break;
+                case 'C': num = 100; break;
+                case 'D': num = 500; break;
+                case 'M': num = 1000; break;
             }
-            else if(ch == 'V'){
-                int j = i-1;
-                if(j >= 0 && s.charAt(j) == 'I'){
-                    num -= 2;
-                }
-                num += 5;
-            }
-            else if(ch == 'X'){
-                int j = i-1;
-                if(j >= 0 && s.charAt(j) == 'I'){
-                    num -= 2;
-                }
-                num += 10;
-            }
-            else if(ch == 'L'){
-                int j = i-1;
-                if(j >= 0 && s.charAt(j) == 'X'){
-                    num -= 20;
-                }
-                num += 50;
-            }
-            else if(ch == 'C'){
-                int j = i-1;
-                if(j >= 0 && s.charAt(j) == 'X'){
-                    num -= 20;
-                }
-                num += 100;
-            }
-            else if(ch == 'D'){
-                int j = i-1;
-                if(j >= 0 && s.charAt(j) == 'C'){
-                    num -= 200;
-                }
-                num += 500;
-            }
-            else {
-                int j = i-1;
-                if(j >= 0 && s.charAt(j) == 'C'){
-                    num -= 200;
-                }
-                num += 1000;
+            if(4*num < ans) ans -= num;
+            else{
+                ans += num;
             }
         }
         
-        return num;
+        return ans;
     }
 }
