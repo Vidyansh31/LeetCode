@@ -19,20 +19,27 @@ class Node {
 
 class Solution {
     public List<Integer> postorder(Node root) {
-     List<Integer> post = new ArrayList<>();
-        postOrder(root,post);
-        return post;
-    }
-    
-    private void postOrder(Node root, List<Integer> post){
+        Stack<Node> st = new Stack<>();
+        List<Integer> post = new LinkedList<>();
         if(root == null){
-            return;
+            return post;
         } 
         
-        for(Node n : root.children){
-            postOrder(n,post);
+        st.push(root);
+        
+        while(st.size() > 0){
+              //rem
+            Node rem = st.pop();
+            
+            //add to list
+            post.add(0,rem.val);
+            
+            //add children in reverse
+            for(int i = 0; i < rem.children.size(); i++){
+                st.push(rem.children.get(i));
+            }
         }
         
-        post.add(root.val);
+        return post;
     }
 }
