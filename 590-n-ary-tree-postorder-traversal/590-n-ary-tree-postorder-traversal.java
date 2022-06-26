@@ -28,15 +28,17 @@ class Solution {
         st.push(root);
         
         while(st.size() > 0){
-              //rem
-            Node rem = st.pop();
-            
-            //add to list
-            post.add(0,rem.val);
-            
-            //add children in reverse
-            for(int i = 0; i < rem.children.size(); i++){
-                st.push(rem.children.get(i));
+            //Add Children in reverse
+           Node top = st.peek();
+            if(top.children != null && top.children.size() > 0){
+                for(int i = top.children.size()-1; i>=0; i--){
+                    st.push(top.children.get(i));
+                }
+                //after adding make children null so that it will not added again
+                top.children = null;
+            }
+            else{
+                post.add(st.pop().val);
             }
         }
         
