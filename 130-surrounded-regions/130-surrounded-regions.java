@@ -34,16 +34,17 @@ class Solution {
                 if(board[i][j] == 'O'){
                     board[i][j] = 'X';
                 }
-            }
-        }
-        
-        for(int i = 0; i < row; i++){
-            for(int j = 0; j < col; j++){
                 if(board[i][j] == '*'){
                     board[i][j] = 'O';
                 }
             }
         }
+        
+//         for(int i = 0; i < row; i++){
+//             for(int j = 0; j < col; j++){
+                
+//             }
+//         }
     }
     
     private void boundaryDFS(char[][] b , int i , int j){
