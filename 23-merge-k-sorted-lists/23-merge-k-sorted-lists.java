@@ -19,23 +19,23 @@ class Solution {
         }
         
 
-        int j  = 1;
-        
-        while(j < lists.length){
-            ListNode one = lists[0];
-            ListNode two = lists[j];
-            helper(lists,one, two);
-            j++;
-        }
-        
-        
-        return lists[0];
+       return helper1(lists,0,lists.length-1);
     }
     
-    public void helper(ListNode[] lists, ListNode one , ListNode two){
+    public ListNode helper1(ListNode[] lists, int st, int end){
+        if(st > end) return null;
+        if(st == end) return lists[st];
+        int mid = (st+end)/2;
+        ListNode l1 = helper1(lists,st,mid);
+        ListNode l2 = helper1(lists,mid+1,end);
+        
+        return merge(l1,l2);
+    }
+    
+    public ListNode merge( ListNode one , ListNode two){
         if(one == null || two == null){
-            lists[0] = one == null ? two : one;
-            return;
+            return one == null ? two : one;
+            
         }
         
         ListNode dummy = new ListNode(-1);
@@ -62,6 +62,6 @@ class Solution {
             prev.next = one;
         }
         
-        lists[0] = dummy.next;
+        return dummy.next;
     }
 }
