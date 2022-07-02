@@ -6,10 +6,6 @@ class Solution {
     }
     
     public void helper(List<List<Integer>> list, List<Integer> temp, int st, int n, int k){
-        if(st > n+1){
-            return;
-        }
-        
         
         if(k == 0){
             list.add(new ArrayList<>(temp));
