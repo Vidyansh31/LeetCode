@@ -9,17 +9,23 @@ class Solution {
         int maxl = 0;
         
         for(int i = 0; i < nums.length; i++){
-           if(!set.contains(nums[i] - 1)){
-                int currNum = nums[i];
-               int len = 1;
-            while(set.contains(currNum+1)){
-                len++;
-                currNum = currNum + 1;
+            int count = 1;
+
+            // look left
+            int num = nums[i];
+            while (set.contains(--num)) {
+              count++;
+              set.remove(num);
             }
-            
-            maxl = Math.max(maxl,len);
-            
-           }
+
+            // look right
+            num = nums[i];
+            while (set.contains(++num)) {
+              count++;
+              set.remove(num);
+            }
+
+            maxl = Math.max(maxl, count);
         }
         
         return maxl;
