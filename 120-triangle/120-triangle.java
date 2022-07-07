@@ -1,13 +1,25 @@
 class Solution {
+    private Integer[][] memo;
     public int minimumTotal(List<List<Integer>> triangle) {
-        for(int i = triangle.size() - 2 ; i >= 0; i--){
-            for(int j = 0; j < triangle.get(i).size() ; j++){
-                int min = Math.min(triangle.get(i+1).get(j),triangle.get(i+1).get(j+1));
-                int sum = min + triangle.get(i).get(j);
-                triangle.get(i).set(j,sum);
-            }
+        int n = triangle.size();
+        memo = new Integer[n][n];
+        return helper(triangle,0,0);
+    }
+    
+    public int helper(List<List<Integer>> triangle, int st, int level){
+        if(level == triangle.size()-1){
+            return triangle.get(level).get(st);
         }
         
-        return triangle.get(0).get(0);
+        if(memo[level][st] != null ){
+            return memo[level][st];
+        }
+        
+        int I = helper(triangle,st,level+1);
+        int I1 = helper(triangle,st+1,level+1);
+        
+        int sum  = triangle.get(level).get(st) + Math.min(I,I1);
+        
+        return memo[level][st] = sum;
     }
 }
