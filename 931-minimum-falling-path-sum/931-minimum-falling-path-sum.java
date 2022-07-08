@@ -1,37 +1,35 @@
 class Solution {
     public int minFallingPathSum(int[][] matrix) {
+        int n = matrix.length-1;
+        int m = matrix[0].length-1;
         int[][] dp = new int[matrix.length][matrix[0].length];
-        for(int[] row : dp){
-            Arrays.fill(row,-1);
-        }
-        int minFall = Integer.MAX_VALUE;
-        int i = 0;
-        for(int j = 0; j < matrix[0].length; j++){
-            int ans = helper(matrix,i,j,dp);
-            minFall = Math.min(ans,minFall);
+        
+        for(int i = n; i >= 0; i--){
+            for(int j = m; j >= 0; j--){
+                if(i == n){
+                    dp[i][j] = matrix[i][j];
+                }
+                else if(j == m){
+                    dp[i][j] = matrix[i][j] + Math.min(dp[i+1][j],dp[i+1][j-1]);
+                }
+                else if(j == 0){
+                    dp[i][j] = matrix[i][j] + Math.min(dp[i+1][j],dp[i+1][j+1]);
+                }
+                else{
+                    dp[i][j] = matrix[i][j] + Math.min(dp[i+1][j],Math.min(dp[i+1][j+1],dp[i+1][j-1]));
+                }
+                
+            }
         }
         
-        return minFall;
+        int i = 0;
+        int ans = Integer.MAX_VALUE;
+        for(int j = 0; j <= m; j++){
+            ans = Math.min(dp[i][j],ans);
+        }
+        
+        return ans;
     }
     
-    private int helper(int[][] arr, int i, int j,int[][] dp){
-        if(j >= arr[0].length || j < 0 ){
-            return Integer.MAX_VALUE;
-        }
-        
-         if(i == arr.length-1){
-            return arr[i][j];
-        }
-        
-        if(dp[i][j] != -1){
-            return dp[i][j];
-        }
-        
-        int leftDia = helper(arr,i+1,j-1,dp);
-        int down = helper(arr,i+1,j,dp);
-        int rightDia = helper(arr, i+1, j+1,dp);
-        
-        
-        return dp[i][j] = arr[i][j] + Math.min(down,Math.min(leftDia,rightDia));
-    }
+    
 }
