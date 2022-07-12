@@ -1,28 +1,27 @@
 class Solution {
     public int change(int amount, int[] coins) {
         int n = coins.length;
-        Integer[][] dp = new Integer[n][amount+1];
-        return helper(coins,n-1,amount,dp);
-    }
-    
-    private int helper(int[] arr, int idx, int x,Integer[][] dp){
+        int[] prev = new int[amount+1];
         
-        if(idx == 0){
-            if(x % arr[0] == 0){
-                return 1;
+        for(int i = 0; i <= amount; i++){
+            if(i%coins[0] == 0) prev[i] = 1;
+            else prev[i] = 0;
+        }
+        
+        for(int i = 1; i < n; i++){
+            int[] curr = new int[amount+1];
+            for(int j = 0; j <= amount; j++){
+                int notTake = prev[j];
+                int take = 0;
+                if(coins[i] <= j) take = curr[j-coins[i]];
+
+                curr[j] = notTake + take;
             }
-            
-            return 0;
+            prev = curr;
         }
         
-        if(dp[idx][x] != null){
-            return dp[idx][x];
-        }
-        
-        int take = 0;
-        if(arr[idx] <= x) take = helper(arr,idx,x-arr[idx],dp);
-        int notTake = helper(arr,idx-1,x,dp);
-    
-        return dp[idx][x] = notTake + take;
+        return prev[amount];
     }
+    
+  
 }
