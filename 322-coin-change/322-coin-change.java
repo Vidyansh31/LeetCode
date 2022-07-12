@@ -1,27 +1,29 @@
 class Solution {
     public int coinChange(int[] coins, int amount) {
         int n = coins.length;
-        int[][] dp = new int[n][amount+1];
+        int[] dp  = new int[amount+1];
         
         //write base case
         for(int i = 0; i < amount+1; i++){
-            if(i%coins[0] == 0) dp[0][i] = i/coins[0];
+            if(i%coins[0] == 0) dp[i] = i/coins[0];
             else{
-                dp[0][i] = (int)1e9;
+                dp[i] = (int)1e9;
             }
         }
         
         for(int i = 1; i < n; i++){
+            int[] curr  = new int[amount+1];
             for(int j = 0; j <= amount; j++){
-                int notTake = dp[i-1][j];
+                int notTake = dp[j];
                 int take = Integer.MAX_VALUE;
-                if(coins[i] <= j) take = 1 + dp[i][j-coins[i]];
+                if(coins[i] <= j) take = 1 + curr[j-coins[i]];
 
-                dp[i][j] = Math.min(take,notTake);
+                curr[j] = Math.min(take,notTake);
             }
+            dp = curr;   
         }
         
-        return dp[n-1][amount] != (int)1e9 ? dp[n-1][amount] : -1;
+        return dp[amount] != (int)1e9 ? dp[amount] : -1;
     }
     
    
