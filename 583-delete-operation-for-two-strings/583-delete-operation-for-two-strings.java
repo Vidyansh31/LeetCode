@@ -1,17 +1,31 @@
 class Solution {
-    public int minDistance(String s1, String s2) {
-        int[][] memo = new int[s1.length() + 1][s2.length() + 1];
-        return s1.length() + s2.length() - 2 * lcs(s1, s2, s1.length(), s2.length(), memo);
+    public int minDistance(String word1, String word2) {
+       
+        
+        int n = word1.length();
+        int m = word2.length();
+        
+       
+        Integer[][] dp = new Integer[n][m];
+        int lcs = helper(word1,word2,n-1,m-1,dp);
+        
+        return n + m - 2*lcs;
     }
-    public int lcs(String s1, String s2, int m, int n, int[][] memo) {
-        if (m == 0 || n == 0)
+    
+    private int helper(String s1, String s2, int idx1, int idx2, Integer[][] dp){
+        
+        if(idx1 < 0 || idx2 < 0){
             return 0;
-        if (memo[m][n] > 0)
-            return memo[m][n];
-        if (s1.charAt(m - 1) == s2.charAt(n - 1))
-            memo[m][n] = 1 + lcs(s1, s2, m - 1, n - 1, memo);
-        else
-            memo[m][n] = Math.max(lcs(s1, s2, m, n - 1, memo), lcs(s1, s2, m - 1, n, memo));
-        return memo[m][n];
+        }
+        
+        if(dp[idx1][idx2] != null){
+            return dp[idx1][idx2];
+        }
+        
+        if(s1.charAt(idx1) == s2.charAt(idx2)){
+            return dp[idx1][idx2] = 1 + helper(s1,s2,idx1-1,idx2-1,dp);
+        }
+        
+        return dp[idx1][idx2] = Math.max(helper(s1,s2,idx1-1,idx2,dp), helper(s1,s2,idx1,idx2-1,dp));
     }
 }
