@@ -16,17 +16,13 @@ class Solution {
         if(dp[idx1][idx2] != null){
             return dp[idx1][idx2];
         }
-        int match = 0;
-        int notMatch = 0;
+       
         //when last char matches
         if(s1.charAt(idx1) == s2.charAt(idx2)){
-            match = 1 + helper(s1,idx1-1, s2, idx2-1,dp);
-        }
-        else{
-            notMatch = Math.max(helper(s1,idx1-1,s2,idx2,dp),helper(s1, idx1, s2, idx2-1,dp));
+            return dp[idx1][idx2] =  1 + helper(s1,idx1-1, s2, idx2-1,dp);
         }
         
-        return dp[idx1][idx2] = Math.max(match,notMatch);
-        
+        return dp[idx1][idx2] =  Math.max(helper(s1,idx1-1,s2,idx2,dp),helper(s1, idx1, s2, idx2-1,dp));
+     
     }
 }
