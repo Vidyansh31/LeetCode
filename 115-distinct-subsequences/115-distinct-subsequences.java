@@ -3,28 +3,31 @@ class Solution {
         int n = s.length();
         int m = t.length();
         
-        Integer[][] dp = new Integer[n][m];
+        int[][] dp = new int[n+1][m+1];
         
-        return helper(s,t,n-1,m-1,dp);
+        //base cases
+        for(int i = 0; i <= n; i++){
+            dp[i][0] = 1;
+        }
+        
+        for(int j = 1; j <= m ; j++){
+            dp[0][j] = 0;
+        }
+        
+        for(int i = 1; i <= n; i++){
+            for(int j = 1; j <= m; j++){
+                if(s.charAt(i-1) == t.charAt(j-1)){
+                     dp[i][j] = dp[i-1][j-1] + dp[i-1][j];
+                }
+                else{
+                    dp[i][j] = dp[i-1][j];
+                }
+                  
+            }
+        }
+        
+        return dp[n][m];
     }
     
-    private int helper(String s1, String s2, int idx1, int idx2,Integer[][] dp){
-        if(idx2 < 0){
-            return 1;
-        }
-        
-        if(idx1 < 0){
-            return 0;
-        }
-        
-        if(dp[idx1][idx2] != null){
-            return dp[idx1][idx2];
-        }
-        
-        if(s1.charAt(idx1) == s2.charAt(idx2)){
-            return dp[idx1][idx2] = helper(s1,s2,idx1-1,idx2-1,dp) + helper(s1,s2,idx1-1,idx2,dp);
-        }
-        
-        return dp[idx1][idx2] = helper(s1,s2,idx1-1,idx2,dp);
-    }
+   
 }
