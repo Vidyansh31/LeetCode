@@ -1,33 +1,36 @@
 class Solution {
     public int maxProfit(int[] prices) {
         int n = prices.length;
-        Integer[][][] dp = new Integer[n][2][3];
-        return helper(prices,0,1,2,dp);
+        int[][][] dp = new int[n+1][2][3];
+        
+        for(int i = 0 ; i < 2; i++){
+            for(int j = 0; j < 3; j++){
+                dp[n][i][j] = 0;
+            }
+        }
+        
+        for(int i = n-1; i >= 0; i--){
+            for(int j = 0; j < 2; j++){
+                for(int k = 2; k >= 1; k--){
+                    int profit = 0;
+                    if( j == 1){
+
+                        profit = Math.max(-prices[i]+dp[i+1][j-1][k],dp[i+1][j][k]);
+
+                    }
+                    else{
+                         profit = Math.max(prices[i]+dp[i+1][j+1][k-1],dp[i+1][j][k]);
+                    }
+
+
+                    dp[i][j][k]= profit;
+                }
+            }
+        }
+        
+        
+        return dp[0][1][2];
     }
     
-    private int helper(int[] p, int idx, int buy, int tcount,Integer[][][] dp ){
-        
-        if(idx == p.length || tcount == 0){
-            return 0;
-        }
-        
-        
-        
-        if(dp[idx][buy][tcount] != null){
-            return dp[idx][buy][tcount];
-        }
-        
-        int profit = 0;
-        if(buy == 1){
-            
-            profit = Math.max(-p[idx]+helper(p,idx+1,0,tcount,dp),helper(p,idx+1,1,tcount,dp));
-          
-        }
-        else{
-            profit = Math.max(p[idx]+helper(p,idx+1,1,tcount-1,dp),helper(p,idx+1,0,tcount,dp));
-        }
-        
-        
-        return dp[idx][buy][tcount]= profit;
-    }
+    
 }
