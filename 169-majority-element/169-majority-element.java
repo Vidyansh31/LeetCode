@@ -1,15 +1,14 @@
 class Solution {
     public int majorityElement(int[] nums) {
-        
-        // Bayer Moore Voting algorithm
-        int ans = -1;
+        int el = 0;
         int count = 0;
         
-        for(int el : nums){
-            if(el == ans) 
+        for(int i = 0; i < nums.length; i++){
+            if(el == nums[i]){
                 count++;
+            }
             else if(count == 0){
-                ans = el;
+                el = nums[i];
                 count = 1;
             }
             else{
@@ -17,13 +16,18 @@ class Solution {
             }
         }
         
-            count = 0;
-        for (int index = 0; index < nums.length; index++) {
-          if (nums[index] == ans)
-            count++;
+        count = 0;
+        
+        for(int num : nums){
+            if(num == el){
+                count++;
+            }
         }
-        if (count > (nums.length / 2))
-          return ans;
-        return -1;
+        
+        if(count > nums.length/2){
+            return el;
+        }
+        
+        return 0;
     }
 }
