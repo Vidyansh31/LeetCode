@@ -1,31 +1,29 @@
 class Solution {
     public int maxProfit(int[] prices) {
-        Integer[][] dp = new Integer[prices.length][2];
-        return helper(prices,0,1,dp);
+        int n = prices.length;
+        int[][] dp = new int[n+1][2];
+        dp[n][0] = 0;
+        dp[n][1] = 0;
+        
+        for(int i = n-1; i>= 0; i--){
+            for(int j = 0; j < 2; j++){
+                int p1= 0;
+                if(j == 1){
+                    //buying possibilites
+                    p1 = Math.max(-prices[i]+dp[i+1][j-1],dp[i+1][j]);
+                }
+                else{
+                    //not buying possibilites
+                    p1 = Math.max(prices[i]+dp[i+1][j+1],dp[i+1][j]);
+                }
+
+                dp[i][j] = p1;
+            }
+        }
+        
+        
+        return  dp[0][1];
+                                  
     }
-    
-    private int helper(int[] p, int idx, int buy,Integer[][] dp){
-        //buy --> 0 not allowed buy
-        // buy --> 1 allowed buy
-        
-        if(idx == p.length){
-            return 0;
-        }
-        
-        if(dp[idx][buy] != null){
-            return dp[idx][buy];
-        }
-        
-        int p1= 0;
-        if(buy == 1){
-            //buying possibilites
-            p1 = Math.max(-p[idx]+helper(p,idx+1,0,dp),helper(p,idx+1,1,dp));
-        }
-        else{
-            //not buying possibilites
-            p1 = Math.max(p[idx]+helper(p,idx+1,1,dp),helper(p,idx+1,0,dp));
-        }
-        
-        return dp[idx][buy] = p1;
-    }
+                        
 }
