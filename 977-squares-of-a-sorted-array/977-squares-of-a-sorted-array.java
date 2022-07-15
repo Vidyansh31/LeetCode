@@ -1,4 +1,3 @@
-
 class Solution {
     public int[] sortedSquares(int[] nums) {
         int left = 0;
@@ -8,10 +7,11 @@ class Solution {
         
         while(left <= right){
             if(Math.abs(nums[left]) > Math.abs(nums[right])){
-                result[index] = nums[left]*nums[left];
+                result[index] = Math.abs(nums[left]*nums[left]);
                 left++;
-            }else{
-                result[index] = nums[right]*nums[right];
+            }
+            else{
+                result[index] = Math.abs(nums[right]*nums[right]);
                 right--;
             }
             index--;
