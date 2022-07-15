@@ -1,30 +1,30 @@
 class Solution {
     public int maxProfit(int k, int[] prices) {
         int n = prices.length;
-        Integer[][][] dp = new Integer[n][2][k+1];
+        Integer[][]dp = new Integer[n][2*k+1];
         
-        return helper(prices, 0, 1,k,dp);
+        return helper(prices, 0,0,2*k,dp);
     }
     
-    private int helper(int[] p , int i, int buy, int k, Integer[][][] dp){
+    private int helper(int[] p , int i, int k,int cap, Integer[][] dp){
         
-        if(i == p.length || k == 0){
+        if(i == p.length || k == cap){
             return 0;
         }
         
-        if(dp[i][buy][k] != null){
-            return dp[i][buy][k];
+        if(dp[i][k] != null){
+            return dp[i][k];
         }
         
         int profit = 0;
         
-        if(buy == 1){
-            profit = Math.max(-p[i]+helper(p,i+1,0,k,dp),helper(p,i+1,1,k,dp));
+        if(k%2 == 0){
+            profit = Math.max(-p[i]+helper(p,i+1,k+1,cap,dp),helper(p,i+1,k,cap,dp));
         }
         else{
-            profit = Math.max(p[i]+helper(p,i+1,1,k-1,dp),helper(p,i+1,0,k,dp));
+            profit = Math.max(p[i]+helper(p,i+1,k+1,cap,dp),helper(p,i+1,k,cap,dp));
         }
         
-        return dp[i][buy][k] = profit;
+        return dp[i][k] = profit;
     }
 }
