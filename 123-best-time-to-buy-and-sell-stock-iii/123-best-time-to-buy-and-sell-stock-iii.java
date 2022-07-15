@@ -1,31 +1,29 @@
 class Solution {
     public int maxProfit(int[] prices) {
         int n = prices.length;
-        int[][][] dp = new int[n+1][2][3];
-        
-       
-        
-        for(int i = n-1; i >= 0; i--){
-            for(int j = 0; j < 2; j++){
-                for(int k = 2; k >= 1; k--){
-                    int profit = 0;
-                    if( j == 1){
-                        profit = Math.max(-prices[i]+dp[i+1][j-1][k],dp[i+1][j][k]);
-
-                    }
-                    else{
-                         profit = Math.max(prices[i]+dp[i+1][j+1][k-1],dp[i+1][j][k]);
-                    }
-
-
-                    dp[i][j][k]= profit;
-                }
-            }
-        }
-        
-        
-        return dp[0][1][2];
+        //total 4 transaction - B S B S
+        Integer[][] dp = new Integer[n][4];
+        return helper(prices,0,0,dp);
     }
     
-    
+    private int helper(int[] p , int idx, int trans,Integer[][] dp){
+        
+        if(idx == p.length || trans == 4){
+            return 0;
+        }
+        
+        if(dp[idx][trans] != null){
+            return dp[idx][trans];
+        }
+        
+        int profit = 0;
+        if(trans%2 == 0){
+            profit = Math.max(-p[idx]+helper(p,idx+1,trans+1,dp),helper(p,idx+1,trans,dp));
+        }
+        else{
+            profit = Math.max(p[idx]+helper(p,idx+1,trans+1,dp),helper(p,idx+1,trans,dp));
+        }
+        
+        return dp[idx][trans] =  profit;
+    }
 }
