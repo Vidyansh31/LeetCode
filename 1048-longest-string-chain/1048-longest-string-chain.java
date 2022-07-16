@@ -11,6 +11,7 @@ class Solution {
         
         for(int i = 0; i < n; i++){
             for(int prev = 0; prev < i; prev++){
+                if(words[i].length() != words[prev].length()+1) continue;
                  if( Compare(words[i],words[prev]) && 1 + dp[prev] > dp[i] ){
                     dp[i] = 1 + dp[prev];
                 }
@@ -25,7 +26,7 @@ class Solution {
     }
     
     private boolean Compare(String s, String p){
-        if(s.length() != p.length()+1) return false;
+        
         int i = 0;
         int j = 0;
         while( i < s.length()){
