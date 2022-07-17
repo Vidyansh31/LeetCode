@@ -1,37 +1,32 @@
 class Solution {
     public int minCost(int n, int[] cuts) {
+       int temp[] = new int[cuts.length+2];
+        temp[0] = 0;
         
-        int[] cut = new int[cuts.length+2];
-        cut[0] = 0;
-        for(int i = 1; i <= cuts.length; i++){
-            cut[i] = cuts[i-1];
+        for(int i = 1; i< temp.length-1; i++){
+            temp[i] = cuts[i-1];
         }
-        cut[cut.length-1] = n;
-         Arrays.sort(cut);
         
-        Integer[][] dp = new Integer[cut.length][cut.length];
-       
-       
+        temp[temp.length-1] = n;
+        Arrays.sort(temp);
         
-        return helper( 1, cuts.length, cut,dp);
+        int dp[][] = new int[temp.length+2][temp.length+2];
+        
+        
+        for(int i = cuts.length; i >= 1; i--){
+            for(int j = 1; j <= cuts.length; j++){
+                if(i > j)
+                    continue;
+                int minCost = Integer.MAX_VALUE;
+                for(int ind = i; ind <= j; ind++){
+                    int cost = temp[j+1] - temp[i-1] + dp[i][ind-1] + dp[ind+1][j];
+                    minCost = Math.min(cost, minCost);
+                }
+                dp[i][j] = minCost;
+            }
+        }
+        
+        return dp[1][cuts.length];
     }
     
-    private int helper(int i, int j , int[] cut, Integer[][] dp){
-        if( i > j){
-            return 0;
-        }
-        
-        if(dp[i][j] != null){
-            return dp[i][j];
-        }
-        
-        int mini = Integer.MAX_VALUE;
-        
-        for(int k = i; k <= j; k++){
-            int step = cut[j+1] - cut[i-1] + helper(i, k-1, cut,dp)+helper(k+1,j,cut,dp);
-            mini = Math.min(step,mini);
-        }
-        
-        return dp[i][j] = mini;
-    }
 }
