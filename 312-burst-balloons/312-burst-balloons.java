@@ -7,8 +7,24 @@ class Solution {
             num[i] = nums[i-1];
         }
         num[n+1] = 1;
-        Integer[][] dp = new Integer[n+2][n+2];
-        return helper(1,n,num,dp);
+        int[][] dp = new int[n+2][n+2];
+        
+        for(int i = n; i >= 1; i--){
+            for(int j = 1; j<=n; j++){
+                if(i > j){
+                    continue;
+                }
+                
+                int maxCoin = Integer.MIN_VALUE;
+                for(int k = i; k <= j ; k++){
+                    int coin = num[i-1]*num[k]*num[j+1] + dp[i][k-1] + dp[k+1][j];
+                    maxCoin = Math.max(coin,maxCoin);
+                }
+                
+                dp[i][j] = maxCoin;
+            }
+        }
+        return dp[1][n];
     }
     
     private int helper(int st, int end, int[] nums, Integer[][] dp){
