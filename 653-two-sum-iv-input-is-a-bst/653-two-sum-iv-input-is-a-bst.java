@@ -14,17 +14,33 @@
  * }
  */
 class Solution {
-    public HashSet<Integer> set = new HashSet<>();
     public boolean findTarget(TreeNode root, int k) {
+        
+       HashSet<Integer> set = new HashSet<>();
+        return helper(root,k,set);
+    }
+    
+    private boolean helper(TreeNode root, int tar, HashSet<Integer> set){
         if(root == null){
             return false;
         }
         
-        if(set.contains(k-root.val)){
+        if(set.contains(tar-root.val)){
             return true;
         }
+        
         set.add(root.val);
         
-        return findTarget(root.left,k)|| findTarget(root.right,k);
+        boolean left = helper(root.left,tar,set);
+        if(left == true){
+            return true;
+        }
+        
+        boolean right = helper(root.right,tar,set);
+        if(right == true){
+            return true;
+        }
+        
+        return false;
     }
 }
