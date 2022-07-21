@@ -19,19 +19,28 @@ class Solution {
         if(root == null){
             return 0;
         } 
-        
+        Stack<TreeNode> st = new Stack<>();
         int ans = 0;
-        if(root.left != null){
-            if(root.left.left == null && root.left.right == null) ans += root.left.val ;
-            else{
-                ans += sumOfLeftLeaves(root.left);
+        st.add(root);
+        
+        while(st.size() > 0){
+            TreeNode rem = st.pop();
+            
+            if(rem.left != null){
+                if(rem.left.left == null && rem.left.right == null){
+                    ans += rem.left.val;
+                }
+                else{
+                    st.push(rem.left);
+                }
+            }
+            
+            if(rem.right != null){
+                st.push(rem.right);
             }
         }
         
-        if(root.right != null){
-                ans += sumOfLeftLeaves(root.right);
-        }
-        
         return ans;
+        
     }
 }
