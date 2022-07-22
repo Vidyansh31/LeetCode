@@ -1,55 +1,36 @@
 class TextEditor {
-     Stack<Character> left = new Stack<>();
-     Stack<Character> right = new Stack<>();
+    
+    StringBuilder sb ;
+    int pos = 0;
     public TextEditor() {
-        
+        sb = new StringBuilder();
     }
     
     public void addText(String text) {
-        for(int i = 0; i < text.length(); i++){
-            left.push(text.charAt(i));
-        }
+        sb.insert(pos,text);
+        pos += text.length();
     }
     
     public int deleteText(int k) {
-        int count = 0;
-        while(left.size() > 0 && k-- > 0){
-            left.pop();
-            count++;
-        }
-        return count;
+        int temp = pos;
+        pos -= k;
+        if(pos < 0) pos = 0;
+        sb.delete(pos,temp);
+        return temp-pos;
     }
     
     public String cursorLeft(int k) {
-        while(left.size() > 0&&k-- > 0){
-            right.push(left.pop());
-        }
-        
-        return Kleft();
+        pos -= k;
+        if(pos < 0) pos = 0;
+        if(pos < 10) return sb.substring(0,pos);
+        return sb.substring(pos-10,pos);
     }
     
     public String cursorRight(int k) {
-        while(right.size() > 0&&k-- > 0){
-            left.push(right.pop());
-        }
-        
-        return Kleft();
-    }
-    
-    public String Kleft(){
-        StringBuilder sb = new StringBuilder();
-        int k = 0;
-        while(left.size() > 0 && k < 10){
-            sb.append(left.pop()+"");
-            k++;
-        }
-        
-        String s = sb.reverse().toString();
-        
-        addText(s);
-        
-        return s;
-        
+        pos += k;
+        if(pos > sb.length()) pos = sb.length();
+        if(pos < 10) return sb.substring(0,pos);
+        return sb.substring(pos-10,pos);
     }
 }
 
