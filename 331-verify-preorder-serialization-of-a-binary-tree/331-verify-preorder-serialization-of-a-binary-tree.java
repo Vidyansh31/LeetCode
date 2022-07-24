@@ -1,21 +1,19 @@
 class Solution {
     public boolean isValidSerialization(String preorder) {
         String[] strs = preorder.split(",");
-        
-        Stack<String> st  = new Stack<>();
+        //In starting we have one vacany for root
+        int vacancy = 1;
         
         for(String str : strs){
-            if(str.equals("#")){
-                while(st.size() > 0 && st.peek().equals("#")){
-                    st.pop();
-                    if(st.size() == 0) return false;
-                    st.pop();
-                }
-            }
+            if(--vacancy < 0 ) return false;
             
-            st.push(str);
+            if(!str.equals("#"))            // whenever we encounter a new node left and right two vacancy for                                                                      that node will added in total
+                vacancy += 2;
+           
         }
         
-        return st.size() == 1 && st.peek().equals("#");
+        
+        return vacancy == 0;
+        
     }
 }
