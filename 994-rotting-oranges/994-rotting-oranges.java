@@ -1,8 +1,6 @@
 class Solution {
-    public class Pair{
-        int x;
-        int y;
-        int t;
+    class Pair{
+        int x; int y; int t;
         
         Pair(int x, int y, int t){
             this.x = x;
@@ -10,12 +8,10 @@ class Solution {
             this.t = t;
         }
     }
-    
     public int orangesRotting(int[][] grid) {
-        
-        Queue<Pair> qu = new LinkedList<>();
         int fresh = 0;
         
+        Queue<Pair> qu = new LinkedList<>();
         for(int i = 0; i < grid.length; i++){
             for(int j = 0; j < grid[0].length; j++){
                 if(grid[i][j] == 2){
@@ -27,51 +23,40 @@ class Solution {
             }
         }
         
-        boolean[][] visited = new boolean[grid.length][grid[0].length];
+        boolean[][] vis = new boolean[grid.length][grid[0].length];
         int time = 0;
-        
         while(qu.size() > 0){
-            //remove
             Pair rem = qu.remove();
             
-            if(visited[rem.x][rem.y] == true){
+            if(vis[rem.x][rem.y] == true){
                 continue;
             }
-            visited[rem.x][rem.y] = true;
+            vis[rem.x][rem.y] = true;
             
-            //work
             time = rem.t;
             
             if(grid[rem.x][rem.y] == 1){
                 fresh--;
             }
             
-            addNeighbours(rem.x+1,rem.y,visited,grid,qu,rem.t+1);
-            addNeighbours(rem.x-1,rem.y,visited,grid,qu,rem.t+1);
-            addNeighbours(rem.x,rem.y+1,visited,grid,qu,rem.t+1);
-            addNeighbours(rem.x,rem.y-1,visited,grid,qu,rem.t+1);
+            addN(grid,qu,vis,rem.x-1,rem.y,rem.t+1);
+            addN(grid,qu,vis,rem.x,rem.y-1,rem.t+1);
+            addN(grid,qu,vis,rem.x+1,rem.y,rem.t+1);
+            addN(grid,qu,vis,rem.x,rem.y+1,rem.t+1);
         }
         
         if(fresh == 0){
             return time;
         }
-        else{
-            return -1;
-        }
+        
+        return -1;
     }
     
-    public void addNeighbours(int i, int j, boolean[][] visited, int[][] grid, Queue<Pair> qu, int t){
-        if(i < 0 || j < 0 || i >= grid.length || j >= grid[0].length){
-            return;
-        }
-        else if(visited[i][j] == true){
-            return;
-        }
-        else if(grid[i][j] == 0){
+    private void addN(int[][] grid, Queue<Pair> qu , boolean[][] vis, int i, int j , int t){
+        if(i < 0 || i >= grid.length || j < 0 || j >= grid[0].length || vis[i][j] == true || grid[i][j] == 0){
             return;
         }
         
         qu.add(new Pair(i,j,t));
     }
-    
 }
