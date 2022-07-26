@@ -6,15 +6,12 @@ class Solution {
         return list;
     }
     
-    public void helper(List<List<Integer>> list, List<Integer> temp, int[] nums, int idx){
-        if(idx == nums.length){
-            list.add(new ArrayList<>(temp));
-            return;
-        }
-        
-        temp.add(nums[idx]);
-        helper(list,temp, nums, idx+1);
-        temp.remove(temp.size() - 1);
-        helper(list,temp, nums, idx+1);
+    public void helper(List<List<Integer>> list, List<Integer> tempList, int[] nums, int start){
+        list.add(new ArrayList<>(tempList));
+    for(int i = start; i < nums.length; i++){
+        tempList.add(nums[i]);
+        helper(list, tempList, nums, i + 1);
+        tempList.remove(tempList.size() - 1);
+    }
     }
 }
