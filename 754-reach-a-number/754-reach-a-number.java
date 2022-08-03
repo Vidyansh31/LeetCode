@@ -1,6 +1,6 @@
 class Solution {
     public int reachNumber(int target) {
-        int x = 0;
+        int x = 1;
         target = Math.abs(target);
         
         while(true){
