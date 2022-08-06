@@ -13,25 +13,21 @@ class Solution {
         });
         
        
-        ArrayList<int[]> list = new ArrayList<>();
+        int count = 1;
+        int end = points[0][1];
         
         for(int[] point : points){
-            if(list.size() == 0){
-                list.add(point);
+            if(point[0] > end){
+                count++;
+                end = point[1];
             }
             else{
-                int[] p = list.get(list.size()-1);
-                if(point[0] <= p[1]){
-                    p[1] = Math.min(p[1],point[1]);
-                }
-                else{
-                    list.add(point);
-                }
+                end = Math.min(end,point[1]);
             }
         }
         
         
-        return list.size();
+        return count;
         
     }
 }
