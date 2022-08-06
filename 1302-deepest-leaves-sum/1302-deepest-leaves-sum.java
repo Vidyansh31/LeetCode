@@ -14,32 +14,20 @@
  * }
  */
 class Solution {
-    int level(TreeNode root){
-        if(root == null){
-            return -1;
-        }
-        
-        int left =  level(root.left);
-        int right =  level(root.right);
-        
-        return Math.max(left,right)+1;
-    }
-    public int deepestLeavesSum(TreeNode root) {
-        int l = level(root);
-        System.out.println(l);
-        
+  
+    public int deepestLeavesSum(TreeNode root) {    
         Queue<TreeNode> qu = new LinkedList<>();
         qu.add(root);
         int ans = 0;
         while(qu.size() > 0){
             int size = qu.size();
-            
+            ans = 0;
             while(size-- > 0){
                 TreeNode rem = qu.remove();
                 
-                if(l == 0){
+                
                     ans += rem.val;
-                }
+             
                 
                 if(rem.left != null){
                     qu.add(rem.left);
@@ -49,7 +37,7 @@ class Solution {
                     qu.add(rem.right);
                 }
             }
-            l--;
+            
         }
         
         return ans;
