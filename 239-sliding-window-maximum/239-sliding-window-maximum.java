@@ -1,27 +1,38 @@
 class Solution {
     public int[] maxSlidingWindow(int[] nums, int k) {
-        int n = nums.length;
-        int[] ans = new int[n-k+1];
-        
-        int[] leftMax = new int[n];
-        int[] rightMax = new int[n]; 
-        
-        leftMax[0] = nums[0];
-        rightMax[n-1] = nums[n-1];
-        
-        for(int i = 1; i < n; i++){
-            leftMax[i] = i%k == 0 ? nums[i] : Math.max(leftMax[i-1],nums[i]);
+        int[] nge = new int[nums.length];
+        Stack<Integer> st = new Stack<>();
+        st.push(nums.length-1);
+        nge[nums.length-1] = nums.length;
+        for(int i = nums.length-2; i>= 0; i--){
+            while(st.size() > 0 && nums[i] > nums[st.peek()]){
+                st.pop();
+            }
             
-            int j = n-i-1;
-            rightMax[j] = j%k == 0 ? nums[j] : Math.max(rightMax[j+1],nums[j]);
+            if(st.size() == 0){
+                nge[i] = nums.length;
+            }
+            else{
+                nge[i] = st.peek();
+            }
+            
+            st.push(i);
         }
         
+        int[] res = new int[nums.length-k+1];
+        int j = 0;
         
-        for(int i = 0, j = 0; i+k <= n; i++){
-            ans[j++] = Math.max(rightMax[i],leftMax[i+k-1]);
+        for(int i = 0; i < res.length; i++){
+            if(j < i){
+                j++;
+            }
+            while(nge[j] <= i + k -1){
+                j = nge[j];
+            }
+            
+            res[i] = nums[j];
         }
         
-        return ans;
-        
+        return res;
     }
 }
