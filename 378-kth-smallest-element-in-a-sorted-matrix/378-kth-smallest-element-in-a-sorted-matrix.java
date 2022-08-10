@@ -21,12 +21,12 @@ class Solution {
     
     private int countLessOrEqual(int num, int[][] m){
         int count = 0;
-        for(int[] row : m){
-            for(int n : row){
-                if(n <= num){
-                    count++;
-                }
-            }
+        int c = m.length-1;
+        
+        for(int i = 0; i < m.length && c >= 0 ; i++){
+            
+            while( c >= 0 && m[i][c] > num) c--;
+            count += c+1;
         }
         
         return count;
