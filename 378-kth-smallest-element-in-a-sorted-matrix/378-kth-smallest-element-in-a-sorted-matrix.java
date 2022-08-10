@@ -5,12 +5,13 @@ class Solution {
         int hi = matrix[n-1][n-1];
         int ans = 0;
         while(lo <= hi){
-            int mid = (lo+hi) >> 1;
+            int mid =(hi+lo)/2;
             
-            if(countLessOrEqual(matrix, mid) >= k){
+            if(countLessOrEqual(mid, matrix) >= k){
                 ans = mid;
                 hi = mid-1;
-            }else{
+            }
+            else{
                 lo = mid+1;
             }
         }
@@ -18,14 +19,16 @@ class Solution {
         return ans;
     }
     
-    public int countLessOrEqual(int[][] mat, int x){
-        int count = 0; 
-        int c = mat.length-1;
-        
-        for(int i = 0; i < mat.length; i++){
-            while(c >= 0 && mat[i][c] > x) c--;
-            count += (c+1);
+    private int countLessOrEqual(int num, int[][] m){
+        int count = 0;
+        for(int[] row : m){
+            for(int n : row){
+                if(n <= num){
+                    count++;
+                }
+            }
         }
+        
         return count;
     }
 }
