@@ -1,47 +1,44 @@
 class Solution {
-    boolean flag = true;
-    int len =0;
+    int[][] dir = {{-1,0},{0,1},{1,0},{0,-1}};
     public int numEnclaves(int[][] grid) {
         
-        boolean[][] visited = new boolean[grid.length][grid[0].length];
-        int count = 0;
-        
-         for(int i = 0; i < grid.length; i++){
+        for(int i = 0; i < grid.length; i++){
             for(int j = 0; j < grid[0].length; j++){
-                if(visited[i][j] == false && grid[i][j] == 1){
-                    flag = true;
-                    len = 0;
-                    dfs(grid,visited,i,j);
-                    if(flag == true){
-                        count += len;
+                if(i != 0 && j != 0 && i != grid.length-1 && j != grid[0].length-1){
+                    continue;
+                }
+                else{
+                    if(grid[i][j] == 1){
+                        dfs(grid,i,j);
                     }
-                    
+                }
+                
+            }
+        }
+        
+        int count = 0;
+        for(int[] row : grid){
+            for(int land : row){
+                if(land == 1){
+                    count++;
                 }
             }
         }
         
         return count;
     }
+     
     
-    public void dfs(int[][] grid , boolean[][] visited, int i , int j){
-        if(i < 0 || i >= grid.length || j < 0 || j >= grid[0].length ){
-            flag = false;
-            return;
-        }
-        else if(grid[i][j] == 0){
-            return;
-        }
-        else if(visited[i][j] == true){
-            return;
-        }
+    public void dfs(int[][] grid, int i, int j){
+        grid[i][j] = 0;
         
-        
-        len++;
-        // System.out.println(len);
-        visited[i][j] = true;
-        dfs(grid,visited,i+1,j);
-        dfs(grid,visited,i-1,j);
-        dfs(grid,visited,i,j+1);
-        dfs(grid,visited,i,j-1);
+        for(int[] d : dir){
+            int r = i + d[0];
+            int c = j + d[1];
+            
+            if(r >= 0 && r < grid.length && c >= 0 && c < grid[0].length && grid[r][c] == 1){
+                dfs(grid,r,c);
+            }
+        }
     }
 }
