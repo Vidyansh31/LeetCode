@@ -20,6 +20,7 @@ class Solution {
             set.add(word);
         }
         
+        //Start bfs with beginWord
         Queue<Pair> qu = new LinkedList<>();
         qu.add(new Pair(beginWord,1));
         
@@ -27,18 +28,19 @@ class Solution {
             Pair rem = qu.remove();
             
             String str = rem.word;
+            //Loop over every character of str and change it by [a,z]
+            // if change word is present in set, then
             for(int i = 0; i < str.length(); i++){
                 char wh = str.charAt(i);
-                for(int j = 0; j < 26; j++){
-                    char ch = (char)('a' + j);
-                    if(ch == wh){
-                        continue;
-                    }
-                    String s = str.substring(0, i) + ch
-              + str.substring(i + 1);
-                    
-
+                for(int k = 'a'; k <= 'z'; k++){
+                    char arr[] = str.toCharArray();
+                    arr[i] = (char) k;
+                        
+                    String s = new String(arr);
+            
                     if(set.contains(s)){
+                        // check if that word is equals to endWord if equal return curr level + 1
+                        // else add in queue and remove from set
                         if(s.equals(endWord)){
                             return rem.level+1;
                         }
