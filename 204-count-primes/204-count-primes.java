@@ -6,19 +6,20 @@ class Solution {
             prime[i] = true;
         }
         
-        for(int i = 2; i < Math.sqrt(n); i++){
+        for(int i = 2; i < n; i++){
             if(prime[i] == false){
                 continue;
             }
-            int x = i;
+            
+            int x = 2;
             while(x*i < n){
                 prime[x*i] = false;
                 x++;
             }
         }
         
-        int count = 0;
-        for(int i = 2; i < n; i++){
+        int count = 0; 
+        for(int i = 0; i < n; i++){
             if(prime[i] == true){
                 count++;
             }
