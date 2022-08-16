@@ -3,15 +3,14 @@ class Solution {
         Map<Integer,Integer> map = new HashMap<>();
         
         for(int num : nums){
-            map.put(num,map.getOrDefault(num,0)+1);
+            map.put(num, map.getOrDefault(num,0)+1);
         }
         
         List<Integer> list = new ArrayList<>(map.keySet());
         
-        Collections.sort(list,(a,b) -> {
-            return (map.get(a) == map.get(b)? b-a: map.get(a) - map.get(b));
+        Collections.sort(list, (a,b) ->{
+            return map.get(a)-map.get(b) == 0 ? b-a : map.get(a) - map.get(b);
         });
-        
         
         int[] res = new int[nums.length];
         int i = 0;
@@ -23,6 +22,5 @@ class Solution {
         }
         
         return res;
-        
     }
 }
