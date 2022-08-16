@@ -1,10 +1,11 @@
 class Solution {
     public int[] relativeSortArray(int[] arr1, int[] arr2) {
         int[] map = new int[1001];
-        
+        int max = 0;
         //put all values in arr1 with thier frequency in a hashmap
         for(int num : arr1){
             map[num]++;
+            max = Math.max(max,num);
         }
         
         //now loop over arr2 and add element in ans which are present in arr1 
@@ -18,7 +19,8 @@ class Solution {
             }
         }
         
-        for(int i = 0; i < map.length; i++){
+        //Now loop over map and add all values which have frequency greater than 0
+        for(int i = 0; i <= max; i++){
             while(map[i]-- > 0){
                 res[idx++] = i;
             }
