@@ -5,13 +5,12 @@ class Solution {
         for(int i = 0; i < nums.length-1; i++){
             lo = Math.min(lo,nums[i+1]-nums[i]);
         }
-        int hi = nums[nums.length-1] - nums[0];
-        
+        int hi = nums[nums.length-1]-nums[0];
         
         while(lo < hi){
-            int mid = lo + (hi-lo)/2;
+            int mid = (lo+hi)/2;
             
-            if(countGapsLessOrEqual(nums,mid) >= k){
+            if(countLessOrEqual(mid,nums) >= k){
                 hi = mid;
             }
             else{
@@ -19,19 +18,17 @@ class Solution {
             }
         }
         
-        return hi;
-        
+        return lo;
     }
     
-    public int countGapsLessOrEqual(int[] nums, int mid){
+    
+    public int countLessOrEqual(int mid, int[] nums){
         int count = 0;
-        
-        for(int i = 0; i < nums.length-1; i++){
-            for(int j = i+1; j < nums.length; j++){
-                if(nums[j] - nums[i] <= mid){
-                    count++;
-                }
-            }
+        int j = 0;
+        for(int i = 0; i < nums.length; i++){
+            while(j < nums.length && nums[j]-nums[i] <= mid) j++;
+            
+            count += j-i-1;
         }
         
         return count;
