@@ -19,9 +19,7 @@ class Solution {
                 continue;
             }
             
-            if(arr[i] > target){
-                break;
-            }
+            
             
             if(arr[i] <= target){
                 temp.add(arr[i]);
