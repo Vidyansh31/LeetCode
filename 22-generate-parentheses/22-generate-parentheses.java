@@ -1,24 +1,14 @@
 class Solution {
     public List<String> generateParenthesis(int n) {
-        List<String> list = new ArrayList<>();
-        helper(list,n,n,"");
-        return list;
-    }
-    
-    public void helper(List<String> list, int open, int closed, String s){
-        if(open < 0 || closed < 0){
-            return;
+         List<String> ans = new ArrayList();
+        if (n == 0) {
+            ans.add("");
+        } else {
+            for (int c = 0; c < n; ++c)
+                for (String left: generateParenthesis(c))
+                    for (String right: generateParenthesis(n-1-c))
+                        ans.add("(" + left + ")" + right);
         }
-        if(open == 0 && closed == 0){
-            list.add(s);
-        }
-        
-        if(open == closed){
-            helper(list,open-1,closed,s+"(");
-        }
-        else{
-            helper(list,open-1,closed,s+"(");
-            helper(list,open,closed-1,s+")");
-        }
+        return ans;
     }
 }
