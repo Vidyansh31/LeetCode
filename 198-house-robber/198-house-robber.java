@@ -1,23 +1,26 @@
 class Solution {
     public int rob(int[] nums) {
-        if(nums.length == 0){
+        int n = nums.length-1;
+        int[] dp = new int[n+1];
+        Arrays.fill(dp,-1);
+        return helper(nums,n,dp);
+    }
+    
+    public int helper(int[] nums, int idx,int[] dp){
+        if(idx < 0){
             return 0;
         }
-        
-        if(nums.length == 1){
+        if(idx == 0){
+            //yaha tbhi ayenge jb 1 pick nhi kara hoga
             return nums[0];
         }
         
-       int[] dp = new int[nums.length];
-        int temp = 0;
-        dp[0] = nums[0]; 
-        
-        for(int i = 1; i < dp.length; i++){
-            dp[i] = Math.max(temp+nums[i],dp[i-1]);
-            temp = dp[i-1];
+        if(dp[idx] != -1){
+            return dp[idx];
         }
+        int pick = nums[idx] + helper(nums, idx-2,dp);
+        int notPick = helper(nums,idx-1,dp);
         
-        return dp[nums.length-1];
-        
+        return  dp[idx] = Math.max(pick,notPick);
     }
 }
