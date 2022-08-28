@@ -16,13 +16,14 @@ class Solution {
             }
         }
         
-        //remove
-         for(int i = 0; i < mat.length; i++){
+        for(int i = 0; i < mat.length; i++){
             for(int j = 0; j < mat[0].length; j++){
                 int gap = i-j;
+                
                 mat[i][j] = map.get(gap).remove();
             }
         }
+        
         return mat;
     }
 }
