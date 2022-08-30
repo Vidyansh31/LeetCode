@@ -14,20 +14,24 @@
  * }
  */
 class Solution {
-    int prev = 0;
+    
     public TreeNode bstToGst(TreeNode root) {
+        return helper(root,new TreeNode(0));
+    }
+    
+    public TreeNode helper(TreeNode root, TreeNode sum){
         if(root == null){
             return null;
         }
         
         
         
-        root.right = bstToGst(root.right);
+        root.right = helper(root.right,sum);
         
-        root.val += prev;
-        prev = root.val;
+        root.val += sum.val;
+        sum.val = root.val;
         
-        root.left = bstToGst(root.left);
+        root.left = helper(root.left,sum);
         
         return root;
     }
