@@ -15,13 +15,13 @@
  */
 class Solution {
     public List<List<Integer>> levelOrderBottom(TreeNode root) {
-        List<List<Integer>> ans = new ArrayList<>();
+        LinkedList<List<Integer>> ans = new LinkedList<>();
         if(root == null){
             return ans;
         }
         
         Queue<TreeNode> qu = new LinkedList<>();
-        Stack<List<Integer>> st = new Stack<>();
+        
         qu.add(root);
         
         while(qu.size() > 0){
@@ -41,12 +41,10 @@ class Solution {
                 }
             }
             
-            st.push(temp);
+            ans.addFirst(temp);
         }
         
-        while(st.size()> 0){
-            ans.add(st.pop());
-        }
+       
         
         return ans;
     }
