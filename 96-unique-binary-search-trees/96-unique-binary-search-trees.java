@@ -2,25 +2,18 @@ class Solution {
     public int numTrees(int n) {
         int[] dp = new int[n+1];
         dp[0] = 1;
-        return helper(n,dp);
-    }
-    
-    public int helper(int n , int[] dp){
-        if(n == 1) return 1;
-        if(n == 2) return 2;
+        dp[1] = 1;
         
-        if(dp[n] != 0){
-            return dp[n];
+        for(int i = 2; i <= n; i++){
+            int left = 0;
+            int right = i-1;
+            while(left <= i-1){
+                dp[i] += dp[left]*dp[right];
+                left++;
+                right--;
+            }
         }
         
-        int total = 0;
-        for(int i = 1; i <= n; i++){
-            int left = helper(i-1,dp);
-            int right = helper(n-i,dp);
-            
-            total += left*right;
-        }
-        
-        return dp[n] = total;
+        return dp[n];
     }
 }
