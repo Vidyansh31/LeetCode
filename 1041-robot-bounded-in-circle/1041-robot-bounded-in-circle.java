@@ -5,7 +5,7 @@ class Solution {
         int Xo = 0;
         int Yo = 0;
         
-        for(int i = 0; i < 4; i++){
+        
             for(char ch : instructions.toCharArray()){
             if(ch == 'G'){
                 if(currDir == "North"){
@@ -50,8 +50,15 @@ class Solution {
                 }
             }
         }
+        
+      if(Xo == 0 && Yo == 0){
+          return true;
+      } 
+        else if(currDir.equals("North")){
+            return false;
         }
         
-        return Xo == 0 && Yo == 0;
+        return true;
+      
     }
 }
