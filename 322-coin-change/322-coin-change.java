@@ -1,29 +1,31 @@
 class Solution {
     public int coinChange(int[] coins, int amount) {
         int n = coins.length;
-        Integer[][] dp = new Integer[n+1][amount+1];
-        int ans =  helper(coins,amount,n-1,dp);
-        return ans == (int)1e9 ? -1 : ans;
-    }
-    
-    public int helper(int[] arr, int tar, int idx, Integer[][] dp){
-        if(idx == 0){
-            if(tar%arr[0] == 0){
-                return tar/arr[0];
+        
+        int[][] dp = new int[n][amount+1];
+        
+        //write base cases
+        for(int i = 0; i <= amount; i++){
+            if(i%coins[0] == 0){
+                dp[0][i] = i/coins[0];
             }
-            return (int)1e9;
+            else{
+                dp[0][i] = (int)1e9;
+            }
         }
         
-        if(dp[idx][tar] != null){
-            return dp[idx][tar];
+        for(int i = 1; i < n; i++){
+            for(int j = 0; j <= amount; j++){
+                int notTake = dp[i-1][j];
+                
+                int take = (int)1e9;
+                
+                if(j >= coins[i]) take = 1 + dp[i][j-coins[i]];
+                
+                dp[i][j] = Math.min(take,notTake);
+            }
         }
         
-        int notTake = helper(arr,tar,idx-1,dp);
-        
-        int take = (int)1e9;
-        
-        if(tar >= arr[idx]) take = 1 + helper(arr,tar-arr[idx],idx,dp);
-        
-        return dp[idx][tar] = Math.min(take,notTake);
+        return dp[n-1][amount] == (int)1e9 ? -1 : dp[n-1][amount];
     }
 }
