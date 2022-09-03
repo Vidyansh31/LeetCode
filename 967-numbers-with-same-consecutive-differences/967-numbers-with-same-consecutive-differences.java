@@ -1,9 +1,17 @@
 class Solution {
     public int[] numsSameConsecDiff(int n, int k) {
-        List<Integer> ans = new ArrayList<>();
-        for(int ch = 1; ch <= 9; ch++){
-            createNum(ch,k,n-1,ans);
+        List<Integer> ans = Arrays.asList(1,2,3,4,5,6,7,8,9);
+        
+        for(int i = 2; i <= n; i++){
+            List<Integer> curr = new ArrayList<>();
+            for(int num : ans){
+                int digit = num%10;
+                if(digit+k < 10) curr.add(num*10+(digit+k));
+                if(k > 0 && digit-k >= 0) curr.add(num*10+(digit-k));
+            }
+            ans = curr;
         }
+       
         
         int[] res = new int[ans.size()];
         int i = 0;
