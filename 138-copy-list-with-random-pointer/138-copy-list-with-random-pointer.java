@@ -19,38 +19,39 @@ class Solution {
             return null;
         }
         
-        //Step 1 : Create Copy
-        Node curr = head;
-        while(curr != null){
-            Node chead = new Node(curr.val);
-            chead.next = curr.next;
+        //Making duplicates node
+        Node h1 = head;
+        while(h1 != null){
+            Node nNode = new Node(h1.val);
+            nNode.next = h1.next;
+            h1.next = nNode;
             
-            curr.next = chead;
-            curr = curr.next.next;
+            h1 = nNode.next;
         }
         
-        //Step 2 : assign random
-        curr = head;
-        while(curr != null){
-            if(curr.random != null){
-                curr.next.random = curr.random.next;
+        //Assign Random Pointer
+        h1 = head;
+        while(h1 != null){
+            if(h1.random != null){
+                h1.next.random = h1.random.next;
             }
-            curr = curr.next.next;
+            h1 = h1.next.next;
         }
         
-        //Step3 : Restore List
-        Node nHead = head.next;
-        Node temp = nHead;
-        curr = head;
+        //Splitting the list
+        h1 = head;
+        Node nHead = h1.next;
+        Node h2 = nHead;
         
-        while(curr!= null && temp.next != null){
-            curr.next = temp.next;
-            temp.next = temp.next.next;
-            curr = curr.next;
-            temp = temp.next;
+        while(h1 != null && h2.next != null){
+           h1.next = h2.next;
+            h2.next = h1.next.next;
+            h1 = h1.next;
+            h2 = h2.next;
         }
         
-        curr.next = null;
+        h1.next = null;
+        
         
         return nHead;
     }
