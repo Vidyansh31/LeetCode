@@ -11,7 +11,7 @@ class Solution {
             pq.add(point);
             
             if(pq.size() > k){
-                pq.poll();
+                pq.remove();
             }
         }
         
