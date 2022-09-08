@@ -1,24 +1,28 @@
 class Solution {
     public List<Integer> partitionLabels(String s) {
+        int li = 0;
+        int st = -1;
+        
         int[] map = new int[26];
+        
+        //Storing last index of every character
         for(int i = 0; i < s.length(); i++){
-            char ch = s.charAt(i);
-            map[ch-'a'] = i;
+            map[s.charAt(i) - 'a'] = i;
         }
         
-        int st = 0;
-        int end = 0;
-        List<Integer> ans = new ArrayList<>();
+        List<Integer> res = new ArrayList<>();
         for(int i = 0; i < s.length(); i++){
             char ch = s.charAt(i);
-            end = Math.max(end,map[ch-'a']);
-            
-            if(end == i){
-                ans.add(end-st+1);
-                st = ++end;
+            if(map[ch-'a'] > li){
+                li = map[ch-'a'];
             }
-        }
+            
+            if(li == i){
+                res.add(i-st);
+                st = i;
+            }
+        }  
         
-        return ans;
+        return res;
     }
 }
