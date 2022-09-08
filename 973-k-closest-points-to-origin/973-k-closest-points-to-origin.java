@@ -4,15 +4,15 @@ class Solution {
             int dist1 =(int)( Math.pow(a[0],2)+Math.pow(a[1],2));
             int dist2 = (int)(Math.pow(b[0],2)+Math.pow(b[1],2));
             
-            return dist2 - dist1;
+            return dist1 - dist2;
         });
         
         for(int[] point : points){
             pq.add(point);
             
-            if(pq.size() > k){
-                pq.remove();
-            }
+            // if(pq.size() > k){
+            //     pq.remove();
+            // }
         }
         
         
