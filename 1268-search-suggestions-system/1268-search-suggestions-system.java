@@ -1,43 +1,35 @@
 class Solution {
-    // Equivalent code for lower_bound in Java
-    int lower_bound(String[] products, int start, String word) {
-        int i = start, j = products.length, mid;
-        while (i < j) {
-            mid = (i + j) / 2;
-            if (products[mid].compareTo(word) >= 0)
-                j = mid;
-            else
-                i = mid + 1;
+    public List<List<String>> suggestedProducts(String[] products, String searchWord) {
+        List<List<String>> list = new ArrayList<>();
+        if(searchWord.length() == 0 || products.length == 0){
+            return list;
         }
-        return i;
-    }
-public
-    List<List<String>> suggestedProducts(String[] products, String searchWord) {
-        Arrays.sort(products);
-        List<List<String>> result = new ArrayList<>();
-        int start = 0, bsStart = 0, n = products.length;
-        String prefix = new String();
-        for (char c : searchWord.toCharArray()) {
-            prefix += c;
-
-            // Get the starting index of word starting with `prefix`.
-            start = lower_bound(products, bsStart, prefix);
-
-            // Add empty vector to result.
-            result.add(new ArrayList<>());
-
-            // Add the words with the same prefix to the result.
-            // Loop runs until `i` reaches the end of input or 3 times or till the
-            // prefix is same for `products[i]` Whichever comes first.
-            for (int i = start; i < Math.min(start + 3, n); i++) {
-                if (products[i].length() < prefix.length() || !products[i].substring(0, prefix.length()).equals(prefix))
-                    break;
-                result.get(result.size() - 1).add(products[i]);
+        
+        PriorityQueue<String> pq = new PriorityQueue<>(Collections.reverseOrder());
+        
+        for(int i = 0; i < searchWord.length(); i++){
+            String str = searchWord.substring(0,i+1);
+            List<String> suggestion = new ArrayList<>();
+            
+            for(String prod : products){
+                if(prod.startsWith(str)){
+                    pq.add(prod);
+                    
+                    if(pq.size() > 3){
+                        pq.remove();
+                    }
+                }
             }
-
-            // Reduce the size of elements to binary search on since we know
-            bsStart = Math.abs(start);
+            
+            while(pq.size() > 0){
+                suggestion.add(0,pq.remove());
+            }
+            
+            list.add(suggestion);
+            
         }
-        return result;
+        
+        return list;
     }
+    
 }
