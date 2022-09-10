@@ -1,27 +1,30 @@
 class Solution {
     public int maxProfit(int k, int[] prices) {
-        int n = prices.length;
-        int[] prev = new int[2*k+1];
-        
-        for(int i = n-1; i >= 0; i--){
-            int[] curr = new int[2*k+1];
-            for(int j = 0; j < 2*k; j++){
-                int profit = 0;
-        
-                if(j%2 == 0){
-                    profit = Math.max(-prices[i]+prev[j+1],prev[j]);
-                }
-                else{
-                    profit = Math.max(prices[i]+prev[j+1],prev[j]);
-                }
-
-                curr[j] = profit;
-            }
-            prev = curr;
-        }
-        
-        return prev[0];
+        Integer[][][] dp = new Integer[prices.length][2][k+1];
+        return helper(prices,0,1,k,dp);
     }
     
-    
+    public int helper(int[] arr, int idx, int buy, int k, Integer[][][] dp){
+        if(idx == arr.length){
+            return 0;
+        }
+        
+        if(dp[idx][buy][k] != null){
+            return dp[idx][buy][k];
+        }
+        
+        if(k == 0){
+            return 0;
+        }
+        
+        int profit = 0;
+        if(buy == 1){
+            profit = Math.max(-arr[idx]+ helper(arr,idx+1,0,k,dp), helper(arr,idx+1,1,k,dp));
+        }
+        else{
+            profit = Math.max(arr[idx] + helper(arr,idx+1,1,k-1,dp), helper(arr,idx+1,0,k,dp));
+        }
+        
+        return dp[idx][buy][k] = profit;
+    }
 }
