@@ -1,9 +1,9 @@
 class MinStack {
-    Stack<Long> data ;
+    Stack<Long> data;
     long min;
     public MinStack() {
         data = new Stack<>();
-        min = Long.MAX_VALUE;
+        min = Integer.MAX_VALUE;
     }
     
     public void push(int val) {
@@ -13,7 +13,7 @@ class MinStack {
             min = val1;
         }
         else if(min > val1){
-            data.push(val1+val1-min);
+            data.push(val1 + val1 - min);
             min = val1;
         }
         else{
@@ -22,22 +22,20 @@ class MinStack {
     }
     
     public void pop() {
-        if(data.peek() >= min){
-            data.pop();
+        if(data.peek() < min){
+            min = 2*min - data.peek();
         }
-        else{
-            min = 2 * min - data.peek();
-            data.pop();
-        }
-        
+        data.pop();
     }
     
     public int top() {
-        if(data.peek() >= min){
-            long ans = data.peek();
-            return (int) ans;
+        if(data.peek() < min){
+            return (int) min;
         }
-        return (int)min;
+        else{
+            long ans = data.peek();
+            return (int)ans;
+        }
     }
     
     public int getMin() {
