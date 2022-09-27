@@ -14,12 +14,7 @@ class Solution {
             j++;
         }
         
-        System.out.println(st);
         
-       while(st.size() > 0 &&st.peek() == popped[i]){
-           st.pop();
-           i++;
-       }
         
         return st.size() == 0;
     }
