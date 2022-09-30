@@ -5,29 +5,19 @@ class Solution {
         dp[0] = 1;
         dp[1] = 2;
         
-        int[] prev = new int[s.length()];
-        HashMap<Character,Integer> map = new HashMap<>();
-        for(int i = 0; i < s.length(); i++){
-            char ch = s.charAt(i);
-            if(map.containsKey(ch)){
-                prev[i] = map.get(ch);
-            }
-            else{
-                prev[i] = -1;
-            }
-            
-            map.put(ch,i);
-        }
+        int[] lo = new int[26];
+        lo[s.charAt(0) - 'a'] = 1;
     
         for(int i = 2; i <= s.length(); i++){
-            char ch = s.charAt(i-1);
-            if(prev[i-1] == -1){
-                dp[i] = 2*dp[i-1];
+            int  ch = s.charAt(i-1) - 'a';
+            if(lo[ch] != 0){
+                dp[i] = 2*dp[i-1] - dp[lo[ch] -1];
             }
             else{
-                dp[i] = 2*dp[i-1] - dp[prev[i-1]];
+                dp[i] = 2 * dp[i-1];
             }
             
+            lo[ch] = i;
             dp[i] = dp[i] < 0 ? (dp[i]+mod)%mod : dp[i]%mod; 
         }
         
