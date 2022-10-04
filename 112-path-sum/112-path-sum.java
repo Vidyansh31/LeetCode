@@ -18,8 +18,7 @@ class Solution {
         return helper(root,targetSum,0);
     }
     
-    public boolean helper(TreeNode node, int t,int sum){
-        
+    public boolean helper(TreeNode node, int t,int sum){ 
         if(node == null){
             return false;
         }
