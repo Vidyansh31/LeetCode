@@ -15,11 +15,18 @@ class Solution {
         if(dp[i][j][k] != 0){
             return dp[i][j][k];
         }
+        int ii = i;
+        int kk = k;
         
-        int res = (k+1)*(k+1) + helper(arr, i+1, j, 0,dp);
-        for(int m = i+1; m <= j; m++){
+        while(ii+1 <= j && arr[ii+1] == arr[i]){
+            ii++;
+            kk++;
+        }
+        
+        int res = (kk+1)*(kk+1) + helper(arr, ii+1, j, 0,dp);
+        for(int m = ii+1; m <= j; m++){
             if(arr[i] == arr[m]){
-                int fact = helper(arr,i+1,m-1,0,dp) + helper(arr,m,j,k+1,dp);
+                int fact = helper(arr,ii+1,m-1,0,dp) + helper(arr,m,j,kk+1,dp);
                 res = Math.max(res,fact);
             }
         }
