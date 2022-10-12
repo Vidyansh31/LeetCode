@@ -20,11 +20,13 @@ class Solution {
         while(even != null && even.next != null){
             odd.next = even.next;
             even.next = even.next.next;
-            odd.next.next = evenHead;
+            
             
             odd = odd.next;
             even = even.next;
         }
+        
+        odd.next = evenHead;
         
         return head;
     }
