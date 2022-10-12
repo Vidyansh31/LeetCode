@@ -5,19 +5,12 @@ class Solution {
         }
         int n = nums.length;
         Arrays.sort(nums);
-        int i = 0;
-        int j = 1;
-        int k = 2;
-        int max = 0;
-        while(k < n){
-            if(nums[i]+nums[j] > nums[k]){
-                max = Math.max(max, nums[i]+nums[j]+nums[k]);
+        for(int i = n-1; i > 1; i--){
+            if(nums[i] < nums[i-1]+nums[i-2]){
+                return nums[i]+nums[i-1]+nums[i-2];
             }
-            i++;
-            j++;
-            k++;
         }
         
-        return max;
+        return 0;
     }
 }
