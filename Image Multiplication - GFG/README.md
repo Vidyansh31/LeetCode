@@ -1,7 +1,6 @@
 # Image Multiplication
-## Medium 
-<div class="problem-statement">
-                <p></p><p><span style="font-size:18px">You are given a binary tree. Your task is pretty straightforward. You have to find the sum of the product of each node and its mirror image (The mirror of a node is a node which exists at the mirror position of the node in opposite subtree at the root.). Don’t take into account a pair more than once. The root node is the mirror image of itself.</span></p>
+## Medium
+<div class="problems_problem_content__Xm_eO"><p><span style="font-size:18px">You are given a binary tree. Your task is pretty straightforward. You have to find the sum of the product of each node and its mirror image (The mirror of a node is a node which exists at the mirror position of the node in opposite subtree at the root.). Don’t take into account a pair more than once. The root node is the mirror image of itself.</span></p>
 
 <p>&nbsp;</p>
 
@@ -44,5 +43,4 @@ You need to&nbsp;<strong>complete&nbsp;</strong>the&nbsp;<strong>function imgMul
 
 <p><span style="font-size:18px">1 &lt;= Number of nodes &lt;= 10<sup>5</sup><br>
 1 &lt;= Data of a node &lt;= 10<sup>5</sup></span></p>
- <p></p>
-            </div>
+</div>
