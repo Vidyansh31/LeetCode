@@ -1,7 +1,6 @@
 # Find the Closest Element in BST
-## Medium 
-<div class="problem-statement">
-                <p></p><p><span style="font-size:18px">Given a <strong><a href="http://quiz.geeksforgeeks.org/binary-search-tree-set-1-search-and-insertion/" target="_blank">BST</a></strong>&nbsp;and an integer. Find the least absolute difference between any node value of the BST and the given integer.</span></p>
+## Medium
+<div class="problems_problem_content__Xm_eO"><p><span style="font-size:18px">Given a <strong><a href="http://quiz.geeksforgeeks.org/binary-search-tree-set-1-search-and-insertion/">BST</a></strong>&nbsp;and an integer. Find the least absolute difference between any node value of the BST and the given integer.</span></p>
 
 <p><span style="font-size:18px"><strong>Example 1:</strong></span></p>
 
@@ -46,5 +45,4 @@ You don't need to read input or print anything. Your task is to complete the fun
 
 <p><span style="font-size:18px"><strong>Constraints:</strong><br>
 1 &lt;= Number of nodes&nbsp;&lt;= 100000</span></p>
- <p></p>
-            </div>
+</div>
