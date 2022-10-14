@@ -1,4 +1,4 @@
-// { Driver Code Starts
+//{ Driver Code Starts
 //Initial Template for Java
 import java.util.LinkedList;
 import java.util.Queue;
@@ -95,7 +95,8 @@ class GfG {
             t--;
         }
     }
-}// } Driver Code Ends
+}
+// } Driver Code Ends
 
 
 //User function Template for Java
@@ -111,16 +112,17 @@ class Node{
 }
  */
  class Solution {
-     long ans = 0L;
      long mod = 1000000007;
+     long res = 0;
     public long imgMultiply(Node root)
     {
         // code here
-        ans = (root.data*root.data)%mod;
-        
+        if(root == null){
+            return 0L;
+        }
+        res = (root.data * root.data)%mod;
         helper(root.left,root.right);
-        
-        return ans;
+        return res;
     }
     
     public void helper(Node n1, Node n2){
@@ -128,9 +130,9 @@ class Node{
             return;
         }
         
-        ans = (ans+(n1.data*n2.data))%mod;
+        res = ( res + (n1.data * n2.data))%mod;
         
         helper(n1.left,n2.right);
         helper(n1.right,n2.left);
-    } 
+    }
 }
