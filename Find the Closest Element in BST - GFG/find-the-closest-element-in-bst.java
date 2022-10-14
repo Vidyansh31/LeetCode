@@ -1,4 +1,4 @@
-// { Driver Code Starts
+//{ Driver Code Starts
 //Initial Template for Java
 
 /*package whatever //do not write package name here */
@@ -92,7 +92,8 @@ class GFG
             t--;
         }
     }
-}// } Driver Code Ends
+}
+// } Driver Code Ends
 
 
 //User function Template for Java
@@ -101,37 +102,19 @@ class Solution
 {
     //Function to find the least absolute difference between any node
     //value of the BST and the given integer.
-     int least = Integer.MAX_VALUE;
-     int minDiff(Node  root, int K) 
+    static int minDiff(Node  root, int k) 
     { 
-        if(root == null){
-            return 0;
-        }
         // Write your code here
-       helper(root,K);
-       return least;
-    } 
-    
-     void helper(Node root, int K){
-          if(root == null){
-            return ;
+        if(root == null){
+            return Integer.MAX_VALUE;
         }
         
-        int diff = Math.abs(root.data-K);
-        if(diff < least){
-            least = diff;
-        }
-        
-        if(root.data > K){
-            minDiff(root.left,K);
-        }
-        else if(root.data < K){
-            
-            minDiff(root.right,K);
+        if(root.data < k){
+            return Math.min(minDiff(root.right,k),Math.abs(root.data - k));
         }
         else{
-            return;
+            return Math.min(minDiff(root.left,k),Math.abs(root.data - k));
         }
-    }
+    } 
 }
 
