@@ -1,4 +1,4 @@
-// { Driver Code Starts
+//{ Driver Code Starts
 import java.util.*;
 import java.lang.*;
 class Tree{
@@ -114,7 +114,8 @@ public static void insert(Tree root,int n1,int n2,char lr){
 		insert(root.right,n1,n2,lr);
 	}
 }
-}// } Driver Code Ends
+}
+// } Driver Code Ends
 
 
 /*Complete the function below
@@ -135,53 +136,52 @@ class Solution{
        createDuplicates(tree);
        setRandom(tree);
        
-       Tree dup = removeDuplicates(tree);
-       
-       return dup;
+       Tree root = removeDuplicates(tree);
+       return root;
      }
      
-     public void createDuplicates(Tree node){
-         if(node == null){
+     public void createDuplicates(Tree tree){
+         if(tree == null){
              return;
          }
          
-         createDuplicates(node.left);
-         createDuplicates(node.right);
+         createDuplicates(tree.left);
+         createDuplicates(tree.right);
          
-         Tree dup = new Tree(node.data);
-         dup.left = node.left;
+         Tree node = new Tree(tree.data);
          
-         node.left = dup;
+         node.left = tree.left;
+         
+         tree.left = node;
      }
      
-     public void setRandom(Tree org){
-         if(org == null){
+     public void setRandom(Tree tree){
+         if(tree == null){
              return;
          }
          
-         setRandom(org.left.left);
-         setRandom(org.right);
+         setRandom(tree.left.left);
+         setRandom(tree.right);
          
-         if(org.random != null){
-             org.left.random = org.random.left;
+         if(tree.random != null){
+             tree.left.random = tree.random.left;
          }
+         
      }
      
-     public Tree removeDuplicates(Tree node){
-         if(node == null){
+     public Tree removeDuplicates(Tree tree){
+         if(tree == null){
              return null;
          }
          
-         Tree leftdup = removeDuplicates(node.left.left);
-         Tree rightdup = removeDuplicates(node.right);
+         Tree leftNode = removeDuplicates(tree.left.left);
+         Tree rightNode = removeDuplicates(tree.right);
          
-         Tree dup = node.left;
-         node.left = node.left.left;
-         dup.left = leftdup;
-         dup.right = rightdup;
+         Tree dup = tree.left;
+         dup.left = leftNode;
+         dup.right = rightNode;
          
+         tree.left = dup.left;
          return dup;
      }
-     
-     
 }
