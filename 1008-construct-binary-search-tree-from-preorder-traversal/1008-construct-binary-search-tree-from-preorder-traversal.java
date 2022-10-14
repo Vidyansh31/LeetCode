@@ -16,19 +16,22 @@
 class Solution {
     int idx = 0;
     public TreeNode bstFromPreorder(int[] preorder) {
-        return construct(preorder,Integer.MAX_VALUE);
+        TreeNode root = helper(preorder,Integer.MIN_VALUE,Integer.MAX_VALUE);
+        
+        return root;
     }
     
-    public TreeNode construct(int[] pre , int max){
+    public TreeNode helper(int[] pre, int min, int max){
         if(idx == pre.length){
             return null;
         }
-        else if(pre[idx] < max){
+        
+        
+        if(pre[idx] > min && pre[idx] < max){
             int val = pre[idx++];
             TreeNode node = new TreeNode(val);
-            
-            node.left = construct(pre,val);
-            node.right = construct(pre,max);
+            node.left = helper(pre,min,val);
+            node.right = helper(pre,val,max);
             
             return node;
         }
