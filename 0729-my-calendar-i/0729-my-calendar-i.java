@@ -6,18 +6,16 @@ class MyCalendar {
     }
     
     public boolean book(int start, int end) {
-       Integer prevBooking = bookings.floorKey(start);
-        Integer currBooking = bookings.ceilingKey(start);
+       Integer prevBooking = bookings.floorKey(start); // return the just less than start key
+        Integer nextBooking = bookings.ceilingKey(start); // return the just greater than start key
         
-        if(prevBooking != null && start < bookings.get(prevBooking) && end > prevBooking){
-            return false;
-        }
-        else if(currBooking != null &&  start < bookings.get(currBooking) && end > currBooking){
-            return false;
-        }
+        //check for overlap
+       if((prevBooking == null || bookings.get(prevBooking) <= start) && (nextBooking == null || end <= nextBooking)){
+           bookings.put(start,end);
+           return true;
+       }
         
-        bookings.put(start,end);
-        return true;
+        return false;
     }
 }
 
