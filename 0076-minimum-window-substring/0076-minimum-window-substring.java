@@ -1,46 +1,44 @@
 class Solution {
     public String minWindow(String s, String t) {
-    if(s == null || s.length() < t.length() || s.length() == 0){
-        return "";
-    }
-    HashMap<Character,Integer> map = new HashMap<Character,Integer>();
-    for(char c : t.toCharArray()){
-        if(map.containsKey(c)){
-            map.put(c,map.get(c)+1);
-        }else{
-            map.put(c,1);
+        if(s.length() < 0 || s.length() < t.length()){
+            return "";
         }
-    }
-    int left = 0;
-    int minLeft = 0;
-    int minLen = s.length()+1;
-    int count = 0;
-    for(int right = 0; right < s.length(); right++){
-        if(map.containsKey(s.charAt(right))){
-            map.put(s.charAt(right),map.get(s.charAt(right))-1);
-            if(map.get(s.charAt(right)) >= 0){
-                count ++;
-            }
-            while(count == t.length()){
-                if(right-left+1 < minLen){
-                    minLeft = left;
-                    minLen = right-left+1;
-                }
-                if(map.containsKey(s.charAt(left))){
-                    map.put(s.charAt(left),map.get(s.charAt(left))+1);
-                    if(map.get(s.charAt(left)) > 0){
-                        count --;
-                    }
-                }
-                left ++ ;
-            }
+        
+        HashMap<Character,Integer> tmap = new HashMap<>();
+        for(char ch : t.toCharArray()){
+            tmap.put(ch, tmap.getOrDefault(ch,0)+1);
         }
+        
+        HashMap<Character,Integer> smap = new HashMap<>();
+        int count = 0; // this count the valid character or character we are needing
+        int j = -1;
+        String res = "";
+        
+        for(int i = 0; i < s.length(); i++){
+            char ch = s.charAt(i);
+            smap.put(ch, smap.getOrDefault(ch,0)+1);
+            
+            if( smap.getOrDefault(ch,0) <=  tmap.getOrDefault(ch,0)){
+                count++;
+            }
+            
+            //release
+            while(count == t.length() && j < i){
+                String ans = s.substring(j+1,i+1);
+                if(res.length() == 0 || res.length() > ans.length()){
+                    res = ans;
+                }
+                
+                j++;
+                char chr = s.charAt(j);
+                smap.put(chr, smap.get(chr)-1);
+                if( smap.getOrDefault(chr,0) <  tmap.getOrDefault(chr,0)){
+                        count--;
+                }
+            }
+            
+        }
+        
+        return res;
     }
-    if(minLen>s.length())  
-    {  
-        return "";  
-    }  
-    
-    return s.substring(minLeft,minLeft+minLen);
-}
 }
