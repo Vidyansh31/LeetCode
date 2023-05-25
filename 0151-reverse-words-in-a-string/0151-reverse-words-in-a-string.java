@@ -19,6 +19,8 @@ class Solution {
             i = j;
         }
         
+        
+        
         StringBuilder sb = new StringBuilder();
         while(st.size() > 1){
             if(st.peek().length() == 0){
